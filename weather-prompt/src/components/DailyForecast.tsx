@@ -7,47 +7,34 @@ interface ForecastProps {
   isMetric: boolean;
 }
 
-const getWeatherIcon = (iconCode: string) => {
-  return `https://openweathermap.org/img/wn/${iconCode}@2x.png`;
-};
+const getWeatherIcon = (iconCode: string) =>
+  `https://openweathermap.org/img/wn/${iconCode}@2x.png`;
 
 const convertUTCToCityLocalTime = (utcTimestamp: number, cityTimezoneOffset: number) => {
-  // Step 1: Get the user's local timezone offset in seconds
-  const localTimezoneOffset = new Date().getTimezoneOffset() * 60;
-
-  // Step 2: Convert the UTC timestamp to real UTC time
-  const utcTime = new Date((utcTimestamp + localTimezoneOffset) * 1000);
-
-  // Step 3: Apply the searched city's timezone offset
-  const cityLocalTime = new Date(utcTime.getTime() + cityTimezoneOffset * 1000);
-
-  return cityLocalTime;
+  return new Date((utcTimestamp + cityTimezoneOffset) * 1000);
 };
 
-
-const DailyForecast: React.FC<ForecastProps> = ({ forecast, isMetric}) => {
+const DailyForecast: React.FC<ForecastProps> = ({ forecast, isMetric }) => {
   const [showChart, setShowChart] = useState(false);
 
   if (!forecast || !forecast.list || !forecast.city) return null;
 
-  const cityTimezoneOffset = forecast.city.timezone; // Timezone offset in seconds
+  const cityTimezoneOffset = forecast.city.timezone;
   const currentTime = new Date();
-  const tempUnit = !isMetric ? "°C" : "°F";
+  const tempUnit = isMetric ? "°C" : "°F";
 
   const nextTenHours = forecast.list
-  .map((entry: any) => {
-    const cityLocalTime = convertUTCToCityLocalTime(entry.dt, cityTimezoneOffset);
-    
-    return {
-      time: cityLocalTime.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
-      temp: entry.main.temp,
-      icon: entry.weather[0].icon,
-      cityLocalTime, // Store for filtering
-    };
-  })
-  .filter((entry) => entry.cityLocalTime > currentTime) // Ensure future times
-  .slice(0, 10);
-
+    .map((entry: any) => {
+      const cityLocalTime = convertUTCToCityLocalTime(entry.dt, cityTimezoneOffset);
+      return {
+        time: cityLocalTime.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+        temp: entry.main.temp,
+        icon: entry.weather[0].icon,
+        cityLocalTime,
+      };
+    })
+    .filter((entry) => entry.cityLocalTime > currentTime)
+    .slice(0, 10);
 
   return (
     <Paper
@@ -81,7 +68,7 @@ const DailyForecast: React.FC<ForecastProps> = ({ forecast, isMetric}) => {
             height: "6px",
           },
           "&::-webkit-scrollbar-thumb": {
-            backgroundColor: "#ffcc00",
+            backgroundColor: "var(--accent-color)",
             borderRadius: "10px",
           },
         }}
@@ -101,7 +88,10 @@ const DailyForecast: React.FC<ForecastProps> = ({ forecast, isMetric}) => {
             >
               <Typography variant="body2">{entry.time}</Typography>
               <img src={getWeatherIcon(entry.icon)} alt="weather icon" width={40} />
-              <Typography variant="h6">{entry.temp}{tempUnit}</Typography>
+              <Typography variant="h6">
+                {entry.temp}
+                {tempUnit}
+              </Typography>
             </Paper>
           ))
         ) : (
@@ -117,7 +107,7 @@ const DailyForecast: React.FC<ForecastProps> = ({ forecast, isMetric}) => {
                     borderRadius: 5,
                   }}
                 />
-                <Line type="monotone" dataKey="temp" stroke="#ffcc00" strokeWidth={3} />
+                <Line type="monotone" dataKey="temp" stroke="var(--accent-color)" strokeWidth={3} />
               </LineChart>
             </ResponsiveContainer>
           </Box>

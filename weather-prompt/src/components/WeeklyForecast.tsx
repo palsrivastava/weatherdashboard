@@ -11,7 +11,16 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import WbSunnyIcon from "@mui/icons-material/WbSunny";
 import WaterDropIcon from "@mui/icons-material/WaterDrop";
 import AirIcon from "@mui/icons-material/Air";
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+} from "recharts";
 
 interface ForecastItem {
   dt_txt: string;
@@ -27,17 +36,17 @@ interface WeeklyForecastProps {
   isMetric: boolean;
 }
 
-const WeeklyForecast: React.FC<WeeklyForecastProps> = ({ forecast, isMetric}) => {
-  const [view, setView] = useState("accordion"); // "accordion" or "graph"
+const WeeklyForecast: React.FC<WeeklyForecastProps> = ({ forecast, isMetric }) => {
+  const [view, setView] = useState<"accordion" | "graph">("accordion");
 
   if (!forecast) return null;
-  const tempUnit = !isMetric ? "°C" : "°F";
-  const windUnit = !isMetric ? "m/s" : "mph";
+  const tempUnit = isMetric ? "°C" : "°F";
+  const windUnit = isMetric ? "m/s" : "mph";
 
   const dailyForecastMap = new Map<string, ForecastItem>();
 
   forecast.list.forEach((item) => {
-    const date = item.dt_txt.split(" ")[0]; 
+    const date = item.dt_txt.split(" ")[0];
     if (!dailyForecastMap.has(date)) {
       dailyForecastMap.set(date, { ...item });
     } else {
@@ -46,16 +55,14 @@ const WeeklyForecast: React.FC<WeeklyForecastProps> = ({ forecast, isMetric}) =>
       existing.main.temp_min = Math.min(existing.main.temp_min, item.main.temp_min);
     }
   });
-  
-  const dailyForecast = Array.from(dailyForecastMap.values()).slice(0, 5);
-  
 
+  const dailyForecast = Array.from(dailyForecastMap.values()).slice(0, 5);
 
   const toggleView = () => {
-    setView(view === "accordion" ? "graph" : "accordion");
+    setView((prev) => (prev === "accordion" ? "graph" : "accordion"));
   };
 
-  const chartData = dailyForecast.slice(0, 5).map((day) => ({
+  const chartData = dailyForecast.map((day) => ({
     name: new Date(day.dt_txt).toLocaleDateString("en-US", { weekday: "short" }),
     temp_max: day.main.temp_max,
     temp_min: day.main.temp_min,
@@ -70,7 +77,7 @@ const WeeklyForecast: React.FC<WeeklyForecastProps> = ({ forecast, isMetric}) =>
         </Button>
       </Box>
       {view === "accordion" ? (
-        dailyForecast.slice(0, 5).map((day, index) => (
+        dailyForecast.map((day, index) => (
           <Accordion key={index}>
             <AccordionSummary expandIcon={<ExpandMoreIcon />}>
               <Typography>
@@ -88,7 +95,9 @@ const WeeklyForecast: React.FC<WeeklyForecastProps> = ({ forecast, isMetric}) =>
                 <Typography>{day.weather[0].description.toUpperCase()}</Typography>
               </Box>
               <Typography>
-                <WbSunnyIcon /> High: {day.main.temp_max.toFixed(1)}{tempUnit}, Low: {day.main.temp_min.toFixed(1)}{tempUnit}
+                <WbSunnyIcon /> High: {day.main.temp_max.toFixed(1)}
+                {tempUnit}, Low: {day.main.temp_min.toFixed(1)}
+                {tempUnit}
               </Typography>
               <Typography>
                 <WaterDropIcon /> Humidity: {day.main.humidity}%

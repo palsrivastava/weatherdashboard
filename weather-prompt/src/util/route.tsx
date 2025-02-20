@@ -76,15 +76,19 @@ export const fetchForecastData = async (
 
 export const fetchCities = async (input: string): Promise<{ value: string; label: string }[]> => {
   try {
-    const response = await axios.get<{ data: { latitude: number; longitude: number; name: string; country: string }[] }>(
-      `${GEO_API_URL}/cities`,
+    const response = await axios.get(
+      `https://api.openweathermap.org/geo/1.0/direct`,
       {
-        params: { minPopulation: 10000, namePrefix: input },
-        ...GEO_API_OPTIONS,
+        params: {
+          q: input,
+          limit: 5,  
+          appid: API_KEY,
+        },
       }
     );
-    return response.data.data.map((city) => ({
-      value: `${city.latitude} ${city.longitude}`,
+
+    return response.data.map((city: any) => ({
+      value: `${city.lat} ${city.lon}`,
       label: `${city.name}, ${city.country}`,
     }));
   } catch (error) {

@@ -17,9 +17,13 @@ const SearchBar: React.FC<SearchBarProps> = ({ onCitySelect }) => {
   const [searchValue, setSearchValue] = useState<OptionType | null>(null);
 
   const loadOptions = async (inputValue: string) => {
+    if (!inputValue.trim()) {
+      return { options: [] }; 
+    }
     const cities = await fetchCities(inputValue);
     return { options: cities };
   };
+  
 
   const onChangeHandler = (selectedCity: OptionType | null) => {
     if (selectedCity) {

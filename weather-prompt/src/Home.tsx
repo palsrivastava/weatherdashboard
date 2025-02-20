@@ -7,6 +7,7 @@ import WeeklyForecast from "./components/WeeklyForecast";
 import { fetchWeatherData, fetchForecastData } from "./util/route";
 import { AcUnit } from "@mui/icons-material";
 import { WeatherData, ForecastData } from "./util/route";
+//import LocationButton from "./components/LocationButton";
 
 const Home: React.FC = () => {
   const [selectedCity, setSelectedCity] = useState<string | null>(null);

@@ -51,7 +51,7 @@ const WeatherCard: React.FC<WeatherCardProps> = ({ weather, unit }) => {
       <Box display="flex" justifyContent="space-between" alignItems="center">
         <Box>
           <Typography variant="h4" sx={{ fontFamily: "sans-serif", fontWeight: "bold" }}>
-            {weather.main.temp} {tempUnit}
+            {Math.round(weather.main.temp)} {tempUnit}
           </Typography>
           <Typography variant="h5" sx={{ fontWeight: "bold" }}>
             {weather.name}

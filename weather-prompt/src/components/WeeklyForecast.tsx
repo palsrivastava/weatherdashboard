@@ -51,8 +51,8 @@ const WeeklyForecast: React.FC<WeeklyForecastProps> = ({ forecast, unit }) => {
 
   const chartData = dailyForecast.map((day) => ({
     name: new Date(day.dt_txt).toLocaleDateString("en-US", { weekday: "short" }),
-    High: day.main.temp_max,
-    Low: day.main.temp_min,
+    High: Math.round(day.main.temp_max),
+    Low: Math.round(day.main.temp_min),
   }));
 
   return (
@@ -82,8 +82,8 @@ const WeeklyForecast: React.FC<WeeklyForecastProps> = ({ forecast, unit }) => {
                 <Typography>{day.weather[0].description.toUpperCase()}</Typography>
               </Box>
               <Typography>
-                <WbSunnyIcon /> High: {day.main.temp_max.toFixed(1)}
-                {tempUnit}, Low: {day.main.temp_min.toFixed(1)}
+                <WbSunnyIcon /> High: {Math.round(day.main.temp_max)}
+                {tempUnit}, Low: {Math.round(day.main.temp_min)}
                 {tempUnit}
               </Typography>
               <Typography>

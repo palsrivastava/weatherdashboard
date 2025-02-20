@@ -34,7 +34,7 @@ const DailyForecast: React.FC<ForecastProps> = ({ forecast, unit }) => {
       const cityLocalTime = convertUTCToCityLocalTime(entry.dt, cityTimezoneOffset);
       return {
         time: cityLocalTime.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
-        temp: entry.main.temp,
+        temp: Math.round(entry.main.temp),
         icon: entry.weather[0].icon,
         cityLocalTime,
       };
@@ -101,7 +101,7 @@ const DailyForecast: React.FC<ForecastProps> = ({ forecast, unit }) => {
               <Typography variant="body2">{entry.time}</Typography>
               <img src={getWeatherIcon(entry.icon)} alt="weather icon" width={40} />
               <Typography variant="h6">
-                {entry.temp}
+                {Math.round(entry.temp)}
                 {tempUnit}
               </Typography>
             </Paper>

@@ -1,27 +1,10 @@
 import React, { useState } from "react";
-import {
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
-  Typography,
-  Box,
-  Button,
-  IconButton,
-} from "@mui/material";
+import { Accordion, AccordionSummary, AccordionDetails, Typography, Box, IconButton,} from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import WbSunnyIcon from "@mui/icons-material/WbSunny";
 import WaterDropIcon from "@mui/icons-material/WaterDrop";
 import AirIcon from "@mui/icons-material/Air";
-import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-  ResponsiveContainer,
-} from "recharts";
+import {LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from "recharts";
 import {Paper} from "@mui/material";
 import { TableRows } from "@mui/icons-material";
 import { ShowChart } from "@mui/icons-material";

@@ -32,7 +32,6 @@ export interface ForecastData {
   }[];
 }
 
-// Notice we now accept a "unit" string rather than a boolean.
 export const fetchWeatherData = async (
   lat: number,
   lon: number,
@@ -43,7 +42,7 @@ export const fetchWeatherData = async (
       params: {
         lat,
         lon,
-        units: unit, // unit is either "metric" or "imperial"
+        units: unit, 
         appid: API_KEY,
       },
     });

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Box, CircularProgress, AppBar, Toolbar, Typography, Stack, Switch, Container } from "@mui/material";
-import SearchBar from "./components/searchbar";
+import SearchBar from "./components/Search";
 import WeatherCard from "./components/WeatherCard";
 import DailyForecast from "./components/DailyForecast";
 import WeeklyForecast from "./components/WeeklyForecast";

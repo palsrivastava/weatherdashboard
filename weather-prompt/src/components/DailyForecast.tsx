@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, Typography, Paper, Button, Stack } from "@mui/material";
+import { Box, Typography, Paper} from "@mui/material";
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid} from "recharts";
 import {IconButton }from "@mui/material";
 import { ShowChart } from "@mui/icons-material";
@@ -39,7 +39,7 @@ const DailyForecast: React.FC<ForecastProps> = ({ forecast, unit }) => {
         cityLocalTime,
       };
     })
-    .filter((entry) => entry.cityLocalTime > currentTime)
+    .filter((entry:any ) => entry.cityLocalTime > currentTime)
     .slice(0, 10);
 
   return (
@@ -85,7 +85,7 @@ const DailyForecast: React.FC<ForecastProps> = ({ forecast, unit }) => {
         }}
       >
         {!showChart ? (
-          nextTenHours.map((entry, index) => (
+          nextTenHours.map((entry: any, index: any) => (
             <Paper
               key={index}
               sx={{

@@ -2,8 +2,7 @@ import axios from "axios";
 
 const GEO_API_URL = "https://wft-geo-db.p.rapidapi.com/v1/geo";
 const BASE_URL = "https://api.openweathermap.org/data/2.5";
-const API_KEY = "13f4d4c270c625397c11e39d22487eb2";;
-
+const API_KEY = "13f4d4c270c625397c11e39d22487eb2";
 
 const GEO_API_OPTIONS = {
   headers: {
@@ -33,17 +32,18 @@ export interface ForecastData {
   }[];
 }
 
+// Notice we now accept a "unit" string rather than a boolean.
 export const fetchWeatherData = async (
   lat: number,
   lon: number,
-  isMetric: boolean
+  unit: string
 ): Promise<WeatherData | null> => {
   try {
     const response = await axios.get<WeatherData>(`${BASE_URL}/weather`, {
       params: {
         lat,
         lon,
-        units: isMetric ? "metric" : "imperial",
+        units: unit, // unit is either "metric" or "imperial"
         appid: API_KEY,
       },
     });
@@ -57,14 +57,14 @@ export const fetchWeatherData = async (
 export const fetchForecastData = async (
   lat: number,
   lon: number,
-  isMetric: boolean
+  unit: string
 ): Promise<ForecastData | null> => {
   try {
     const response = await axios.get<ForecastData>(`${BASE_URL}/forecast`, {
       params: {
         lat,
         lon,
-        units: isMetric ? "metric" : "imperial",
+        units: unit,
         appid: API_KEY,
       },
     });

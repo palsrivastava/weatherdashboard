@@ -1,27 +1,33 @@
 import React, { useState } from "react";
 import { Box, Typography, Paper, Button } from "@mui/material";
-import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
+import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid} from "recharts";
+import {IconButton }from "@mui/material";
+import { ShowChart } from "@mui/icons-material";
+import { TableRows } from "@mui/icons-material";
 
 interface ForecastProps {
   forecast: any;
-  isMetric: boolean;
+  unit: string; 
 }
 
 const getWeatherIcon = (iconCode: string) =>
   `https://openweathermap.org/img/wn/${iconCode}@2x.png`;
 
 const convertUTCToCityLocalTime = (utcTimestamp: number, cityTimezoneOffset: number) => {
-  return new Date((utcTimestamp + cityTimezoneOffset) * 1000);
+  const localTimezoneOffset = new Date().getTimezoneOffset() * 60;
+  const utcTime = new Date((utcTimestamp + localTimezoneOffset) * 1000);
+  const cityLocalTime = new Date(utcTime.getTime() + cityTimezoneOffset * 1000);
+  return cityLocalTime;
 };
 
-const DailyForecast: React.FC<ForecastProps> = ({ forecast, isMetric }) => {
+const DailyForecast: React.FC<ForecastProps> = ({ forecast, unit }) => {
   const [showChart, setShowChart] = useState(false);
 
   if (!forecast || !forecast.list || !forecast.city) return null;
 
   const cityTimezoneOffset = forecast.city.timezone;
   const currentTime = new Date();
-  const tempUnit = isMetric ? "°C" : "°F";
+  const tempUnit = unit === "metric" ? "°C" : "°F";
 
   const nextTenHours = forecast.list
     .map((entry: any) => {
@@ -44,15 +50,15 @@ const DailyForecast: React.FC<ForecastProps> = ({ forecast, isMetric }) => {
         borderRadius: 3,
         width: "100%",
         maxWidth: 500,
-        background: "linear-gradient(135deg, #1e3c72, #2a5298)",
+        background: "linear-gradient(135deg, #179bae, #4158a6)",
         color: "white",
       }}
       elevation={6}
     >
-      <Typography variant="h6" align="center" sx={{ mb: 1 }}>
-        🌤️ Today’s Forecast (Local Time)
+      <Typography variant="h5" align="center" sx={{ mb: 1 }}>
+        Today’s Forecast 
       </Typography>
-      <Typography variant="subtitle2" align="center" sx={{ opacity: 0.8 }}>
+      <Typography variant="subtitle2" align="center" sx={{ opacity: 1.0 }}>
         {nextTenHours.length} available forecasts
       </Typography>
 
@@ -80,7 +86,8 @@ const DailyForecast: React.FC<ForecastProps> = ({ forecast, isMetric }) => {
               sx={{
                 p: 2,
                 borderRadius: 2,
-                backgroundColor: "rgba(255, 255, 255, 0.1)",
+                color:"#fff",
+                backgroundColor: "rgba(14, 46, 12, 0.1)",
                 backdropFilter: "blur(10px)",
                 textAlign: "center",
                 minWidth: 100,
@@ -98,6 +105,7 @@ const DailyForecast: React.FC<ForecastProps> = ({ forecast, isMetric }) => {
           <Box sx={{ width: "100%", height: 200 }}>
             <ResponsiveContainer width="100%" height="100%">
               <LineChart data={nextTenHours}>
+                <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="time" stroke="#fff" />
                 <YAxis domain={["auto", "auto"]} stroke="#fff" />
                 <Tooltip
@@ -107,7 +115,7 @@ const DailyForecast: React.FC<ForecastProps> = ({ forecast, isMetric }) => {
                     borderRadius: 5,
                   }}
                 />
-                <Line type="monotone" dataKey="temp" stroke="var(--accent-color)" strokeWidth={3} />
+                <Line type="monotone" dataKey="temp" stroke="#FF8343" strokeWidth={3} />
               </LineChart>
             </ResponsiveContainer>
           </Box>
@@ -115,9 +123,10 @@ const DailyForecast: React.FC<ForecastProps> = ({ forecast, isMetric }) => {
       </Box>
 
       <Box sx={{ textAlign: "center", mt: 2 }}>
-        <Button variant="contained" color="warning" onClick={() => setShowChart(!showChart)}>
-          {showChart ? "Show Cards" : "Show Chart"}
-        </Button>
+
+        <IconButton sx={{color:"#1c2e4a", backgroundColor:"#fff"}} onClick={()=>setShowChart(!showChart)}>
+          {showChart ? <TableRows/> : <ShowChart/> }
+        </IconButton>
       </Box>
     </Paper>
   );

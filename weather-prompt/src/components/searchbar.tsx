@@ -25,7 +25,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onCitySelect }) => {
     if (selectedCity) {
       const [lat, lon] = selectedCity.value.split(" ").map(Number);
       onCitySelect(lat, lon, selectedCity.label);
-      setSearchValue(selectedCity);
+      setSearchValue(null);
     }
   };
 

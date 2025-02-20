@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Box, CircularProgress, AppBar, Toolbar, Typography, Stack, Switch, Container } from "@mui/material";
 import SearchBar from "./components/searchbar";
 import WeatherCard from "./components/WeatherCard";
@@ -13,7 +13,7 @@ const Home: React.FC = () => {
   const [weather, setWeather] = useState<WeatherData | null>(null);
   const [forecast, setForecast] = useState<ForecastData | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
-  const [isMetric, setIsMetric] = useState<boolean>(true);
+  const [unit, setUnit] = useState<string>("metric");
 
   const handleCitySelect = async (lat: number, lon: number, label: string) => {
     setSelectedCity(label);
@@ -21,10 +21,9 @@ const Home: React.FC = () => {
     setForecast(null);
     setLoading(true);
 
-
     try {
-      const weatherData = await fetchWeatherData(lat, lon, isMetric);
-      const forecastData = await fetchForecastData(lat, lon, isMetric);
+      const weatherData = await fetchWeatherData(lat, lon, unit);
+      const forecastData = await fetchForecastData(lat, lon, unit);
       setWeather(weatherData);
       setForecast(forecastData);
     } catch (error) {
@@ -34,48 +33,48 @@ const Home: React.FC = () => {
     }
   };
 
-  const handleToggle = () => {
-    setIsMetric((prev) => !prev);
+  useEffect(() => {
     if (selectedCity && weather) {
-      // Re-fetch with updated units.
       handleCitySelect(weather.coord.lat, weather.coord.lon, selectedCity);
     }
+  }, [unit]);
+
+  const handleToggle = () => {
+    setUnit((prev) => (prev === "metric" ? "imperial" : "metric"));
   };
 
   return (
-    <Container maxWidth="lg">
-      {/* App Bar */}
-      <AppBar position="static">
-        <Toolbar>
+    <>
+      <AppBar position="static" sx={{ backgroundColor: "#1c2e4a" }}>
+        <Toolbar >
           <AcUnit />
           <Typography variant="h6" sx={{ marginLeft: 1 }}>
             The Weather App
           </Typography>
           <Box sx={{ flexGrow: 1 }} />
           <Typography variant="body2">°F</Typography>
-          <Switch checked={isMetric} onChange={handleToggle} />
+          <Switch checked={unit === "metric"} onChange={handleToggle} />
           <Typography variant="body2">°C</Typography>
-          
         </Toolbar>
       </AppBar>
 
-      <Box sx={{ my: 4, display: 'flex', justifyContent: 'center' }}>
-        <SearchBar onCitySelect={handleCitySelect} />
-      </Box>
+      <Container maxWidth="xl">
+        <Box sx={{ my: 4, display: 'flex', justifyContent: 'center' }}>
+          <SearchBar onCitySelect={handleCitySelect} />
+        </Box>
 
-      {/* Main Layout */}
-      <Stack direction={{ xs: "column", md: "row" }} spacing={4} justifyContent="space-evenly">
-        <Stack spacing={4} sx={{ flex: 1, alignItems: "center" }}>
-          {loading && <CircularProgress />}
-          <WeatherCard weather={weather} isMetric={isMetric} />
-          <DailyForecast forecast={forecast} isMetric={isMetric} />
+        <Stack direction={{ xs: "column", md: "row" }} spacing={4} justifyContent="space-evenly">
+          <Stack spacing={4} sx={{ flex: 1, alignItems: "center" }}>
+            {loading && <CircularProgress />}
+            <WeatherCard weather={weather} unit={unit} />
+            <DailyForecast forecast={forecast} unit={unit} />
+          </Stack>
+          <Stack sx={{ flex: 1, alignItems: "center" }}>
+            <WeeklyForecast forecast={forecast} unit={unit} />
+          </Stack>
         </Stack>
-        <Stack sx={{ flex: 1, alignItems: "center" }}>
-          <WeeklyForecast forecast={forecast} isMetric={isMetric} />
-        </Stack>
-      </Stack>
-    </Container>
+      </Container>
+    </>
   );
 };
-
 export default Home;

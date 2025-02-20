@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, Typography, Paper, Button } from "@mui/material";
+import { Box, Typography, Paper, Button, Stack } from "@mui/material";
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid} from "recharts";
 import {IconButton }from "@mui/material";
 import { ShowChart } from "@mui/icons-material";
@@ -55,9 +55,14 @@ const DailyForecast: React.FC<ForecastProps> = ({ forecast, unit }) => {
       }}
       elevation={6}
     >
+      <Box display="flex" justifyContent="space-between" alignItems="center">
       <Typography variant="h5" align="center" sx={{ mb: 1 }}>
         Today’s Forecast 
       </Typography>
+      <IconButton sx={{color:"#1c2e4a", backgroundColor:"#fff"}} onClick={()=>setShowChart(!showChart)}>
+          {showChart ? <TableRows/> : <ShowChart/> }
+        </IconButton>
+        </Box>
       <Typography variant="subtitle2" align="center" sx={{ opacity: 1.0 }}>
         {nextTenHours.length} available forecasts
       </Typography>
@@ -120,13 +125,6 @@ const DailyForecast: React.FC<ForecastProps> = ({ forecast, unit }) => {
             </ResponsiveContainer>
           </Box>
         )}
-      </Box>
-
-      <Box sx={{ textAlign: "center", mt: 2 }}>
-
-        <IconButton sx={{color:"#1c2e4a", backgroundColor:"#fff"}} onClick={()=>setShowChart(!showChart)}>
-          {showChart ? <TableRows/> : <ShowChart/> }
-        </IconButton>
       </Box>
     </Paper>
   );

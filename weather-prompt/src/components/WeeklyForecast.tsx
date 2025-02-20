@@ -76,7 +76,7 @@ const WeeklyForecast: React.FC<WeeklyForecastProps> = ({ forecast, unit }) => {
     <Paper elevation={4} sx={{ width: "100%", maxWidth: 600 ,background:"#1c2e4a", borderRadius: "10px"}}>
       <Box display="flex" justifyContent="space-between" alignItems="center" sx={{ p:1, borderRadius: '10px', backgroundColor:"#1c2e4a"}}>
         <Typography variant="h6" sx ={{color:"#fff"}}>  5-Day Forecast</Typography>
-        <IconButton sx={{color:"#1c2e4a", backgroundColor:"#fff",opacity:0.8}} onClick={toggleView}>
+        <IconButton sx={{color:"#1c2e4a", backgroundColor:"#fff"}} onClick={toggleView}>
           {view === "accordion" ? <ShowChart/> : <TableRows/> }
         </IconButton>
       </Box>

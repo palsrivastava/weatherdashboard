@@ -44,7 +44,7 @@ const WeatherCard: React.FC<WeatherCardProps> = ({ weather, unit }) => {
       }}
       elevation={6}
     >
-      <Stack alignItems="center" justifyContent="center" direction="row" gap={2} >
+      <Stack alignItems="center" justifyContent="space-between" direction="row" gap={2} >
         <Typography variant="h5">Current Weather</Typography>
       </Stack>
 

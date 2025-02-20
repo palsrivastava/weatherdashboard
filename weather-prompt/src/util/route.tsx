@@ -1,15 +1,15 @@
 import axios from "axios";
 
-const GEO_API_URL = "https://wft-geo-db.p.rapidapi.com/v1/geo";
+//const GEO_API_URL = "https://wft-geo-db.p.rapidapi.com/v1/geo";
 const BASE_URL = "https://api.openweathermap.org/data/2.5";
-const API_KEY = "13f4d4c270c625397c11e39d22487eb2";
+const API_KEY = import.meta.env.VITE_OPENWEATHER_KEY;
 
-const GEO_API_OPTIONS = {
-  headers: {
-    "X-RapidAPI-Key": "4f0dcce84bmshac9e329bd55fd14p17ec6fjsnff18c2e61917",
-    "X-RapidAPI-Host": "wft-geo-db.p.rapidapi.com",
-  },
-};
+// const GEO_API_OPTIONS = {
+//   headers: {
+//     "X-RapidAPI-Key": import.meta.env.VITE_RAPID_API_KEY;,
+//     "X-RapidAPI-Host": "wft-geo-db.p.rapidapi.com",
+//   },
+// };
 
 export interface WeatherData {
   weather: { description: string; icon: string }[];

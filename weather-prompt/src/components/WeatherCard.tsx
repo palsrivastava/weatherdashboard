@@ -1,14 +1,14 @@
 import React from "react";
 import { Box, Typography, Paper, Stack } from "@mui/material";
+import { WeatherData } from "../util/route";
 
 interface WeatherCardProps {
-  weather: any;
-  isMetric: boolean;
+  weather: WeatherData | null;
+  unit: string; 
 }
 
-const getWeatherIcon = (iconCode: string) => {
-  return `https://openweathermap.org/img/wn/${iconCode}@2x.png`;
-};
+const getWeatherIcon = (iconCode: string) =>
+  `https://openweathermap.org/img/wn/${iconCode}@2x.png`;
 
 const convertUTCToCityLocalTime = (cityTimezoneOffset: number) => {
   const localTimezoneOffset = new Date().getTimezoneOffset() * 60;
@@ -24,12 +24,12 @@ const convertUTCToCityLocalTime = (cityTimezoneOffset: number) => {
   }).format(cityLocalTime);
 };
 
-const WeatherCard: React.FC<WeatherCardProps> = ({ weather, isMetric }) => {
+const WeatherCard: React.FC<WeatherCardProps> = ({ weather, unit }) => {
   if (!weather) return null;
 
+  const tempUnit = unit === "metric" ? "°C" : "°F";
+  const windUnit = unit === "metric" ? "m/s" : "mph";
   const cityLocalTime = convertUTCToCityLocalTime(weather.timezone);
-  const tempUnit = !isMetric ? "°C" : "°F";
-  const windUnit = !isMetric ? "m/s" : "mph";
 
   return (
     <Paper
@@ -38,20 +38,17 @@ const WeatherCard: React.FC<WeatherCardProps> = ({ weather, isMetric }) => {
         p: 3,
         borderRadius: 3,
         width: "100%",
-        maxWidth: 400,
-        background: "linear-gradient(135deg, #2196F3, #0D47A1)",
+        maxWidth: 500,
+        background: "linear-gradient(135deg, #179bae, #4158a6)",
         color: "white",
       }}
       elevation={6}
     >
-      {/* Header */}
-      <Stack alignItems="center" justifyContent="center" direction="row" gap={2} mt="4">
-        <Typography variant="h5">CURRENT WEATHER</Typography>
+      <Stack alignItems="center" justifyContent="space-between" direction="row" gap={2} >
+        <Typography variant="h5">Current Weather</Typography>
       </Stack>
 
-      {/* Main Weather Section */}
       <Box display="flex" justifyContent="space-between" alignItems="center">
-        {/* Left Section */}
         <Box>
           <Typography variant="h4" sx={{ fontFamily: "sans-serif", fontWeight: "bold" }}>
             {weather.main.temp} {tempUnit}
@@ -61,8 +58,6 @@ const WeatherCard: React.FC<WeatherCardProps> = ({ weather, isMetric }) => {
           </Typography>
           <Typography variant="subtitle1">{cityLocalTime}</Typography>
         </Box>
-
-        {/* Right Section - Weather Icon */}
         <Box>
           <img
             src={getWeatherIcon(weather.weather[0].icon)}
@@ -73,11 +68,10 @@ const WeatherCard: React.FC<WeatherCardProps> = ({ weather, isMetric }) => {
         </Box>
       </Box>
 
-      {/* Bottom Section */}
       <Box sx={{ mt: 2 }}>
-        <Typography variant="h6">🌡️ {weather.weather[0].description}</Typography>
-        <Typography>💨 Wind: {weather.wind.speed} {windUnit}</Typography>
-        <Typography>💧 Humidity: {weather.main.humidity}%</Typography>
+        <Typography variant="h6">{weather.weather[0].description.toUpperCase()}</Typography>
+        <Typography>Wind: {weather.wind.speed} {windUnit}</Typography>
+        <Typography>Humidity: {weather.main.humidity}%</Typography>
       </Box>
     </Paper>
   );

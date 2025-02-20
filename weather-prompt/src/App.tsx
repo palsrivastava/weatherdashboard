@@ -1,15 +1,13 @@
-import { useState } from 'react'
-import './App.css'
-import Home from './Home'
+import React from 'react';
+import './App.css';
+import Home from './Home';
 
-function App() {
+const App: React.FC = () => {
   return (
-    <div style={{ width: "100vw", minHeight: "100%", display: "auto", flexDirection: "column", backgroundColor:"#92a8d1" }}>
+    <div className="app-container">
       <Home />
     </div>
   );
-}
+};
 
 export default App;
-
-

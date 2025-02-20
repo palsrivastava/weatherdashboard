@@ -1,45 +1,54 @@
+/* App.css */
+
+/* CSS Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Theme Variables */
+:root {
+  --primary-color: #179BAE;
+  --secondary-color: #179BAE;
+  --accent-color: hsl(30, 37%, 7%);
+  --background-color: #1c2e4a;
+  --text-color: #F1DEC6;
+}
+
+/* Global Styles */
 html, body, #root {
   width: 100%;
   height: 100%;
-  margin: 0;
-  padding: 0;
- 
-  
+  font-family: 'Roboto', sans-serif;
+  background-color: var(--background-color);
 }
 
-#root {
+/* App Container */
+.app-container {
+  width: 100vw;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
-
+  background-image: url("greysky.jpg");
 }
+
+/* Logo Styles (if needed) */
 .logo {
   height: 6em;
   padding: 1.5em;
-  will-change: filter;
   transition: filter 300ms;
 }
+
 .logo:hover {
   filter: drop-shadow(0 0 2em #646cffaa);
 }
+
 .logo.react:hover {
   filter: drop-shadow(0 0 2em #61dafbaa);
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-}
-
+/* Utility Classes */
 .card {
   padding: 2em;
 }

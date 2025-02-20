@@ -11,35 +11,39 @@ const GEO_API_OPTIONS = {
   },
 };
 
-interface WeatherData {
+export interface WeatherData {
   weather: { description: string; icon: string }[];
   main: { temp: number; humidity: number; pressure: number };
   wind: { speed: number };
   name: string;
   sys: { country: string };
   coord: { lat: number; lon: number };
+  timezone: number;
 }
 
-interface ForecastData {
+export interface ForecastData {
+  city: { timezone: number };
   list: {
+    dt: number;
     dt_txt: string;
-    main: { temp_min: number; temp_max: number; humidity: number; pressure: number };
+    main: { temp_min: number; temp_max: number; humidity: number; pressure: number; temp: number };
     weather: { description: string; icon: string }[];
     wind: { speed: number };
   }[];
 }
 
+// Notice we now accept a "unit" string rather than a boolean.
 export const fetchWeatherData = async (
   lat: number,
   lon: number,
-  isMetric: boolean
+  unit: string
 ): Promise<WeatherData | null> => {
   try {
     const response = await axios.get<WeatherData>(`${BASE_URL}/weather`, {
       params: {
         lat,
         lon,
-        units: isMetric ? "metric" : "imperial",
+        units: unit, // unit is either "metric" or "imperial"
         appid: API_KEY,
       },
     });
@@ -53,14 +57,14 @@ export const fetchWeatherData = async (
 export const fetchForecastData = async (
   lat: number,
   lon: number,
-  isMetric: boolean
+  unit: string
 ): Promise<ForecastData | null> => {
   try {
     const response = await axios.get<ForecastData>(`${BASE_URL}/forecast`, {
       params: {
-        lat:lat,
-        lon:lon,
-        units: isMetric ? "metric" : "imperial",
+        lat,
+        lon,
+        units: unit,
         appid: API_KEY,
       },
     });

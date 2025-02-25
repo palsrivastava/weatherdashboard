@@ -7,6 +7,7 @@ import WeeklyForecast from "./components/WeeklyForecast";
 import { fetchWeatherData, fetchForecastData } from "./util/route";
 import { AcUnit } from "@mui/icons-material";
 import { WeatherData, ForecastData } from "./util/route";
+import WeatherMap from "./components/WeatherMap";
 //import LocationButton from "./components/LocationButton";
 
 const Home: React.FC = () => {
@@ -72,6 +73,11 @@ const Home: React.FC = () => {
           </Stack>
           <Stack sx={{ flex: 1, alignItems: "center" }}>
             <WeeklyForecast forecast={forecast} unit={unit} />
+            {weather && (
+            <Box sx={{ width: "100%", maxWidth: 600, mt: 3 }}>
+              <WeatherMap lat={weather.coord.lat} lon={weather.coord.lon} />
+            </Box>
+          )}
           </Stack>
         </Stack>
       </Container>

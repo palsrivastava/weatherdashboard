@@ -117,8 +117,8 @@ const DailyForecast: React.FC<ForecastProps> = ({ forecast, unit }) => {
                 <YAxis domain={["auto", "auto"]} stroke="#333333" />
                 <Tooltip
                   contentStyle={{
-                    backgroundColor: "#1e3c72",
-                    color: "#fff",
+                    backgroundColor: "#fff",
+                    color: "#333333",
                     borderRadius: 5,
                   }}
                 />

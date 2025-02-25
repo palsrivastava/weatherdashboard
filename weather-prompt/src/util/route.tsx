@@ -3,7 +3,7 @@ import axios from "axios";
 //const GEO_API_URL = "https://wft-geo-db.p.rapidapi.com/v1/geo";
 const BASE_URL = "https://api.openweathermap.org/data/2.5";
 const API_KEY = import.meta.env.VITE_OPENWEATHER_KEY;
-
+const TILE_BASE_URL = "https://tile.openweathermap.org/map";
 // const GEO_API_OPTIONS = {
 //   headers: {
 //     "X-RapidAPI-Key": import.meta.env.VITE_RAPID_API_KEY;,
@@ -95,4 +95,8 @@ export const fetchCities = async (input: string): Promise<{ value: string; label
     console.error("Error fetching cities:", error);
     return [];
   }
+};
+
+export const getOpenWeatherTileUrl = (layer: string) => {
+  return `${TILE_BASE_URL}/${layer}/{z}/{x}/{y}.png?appid=${API_KEY}`;
 };

@@ -46,16 +46,17 @@ const DailyForecast: React.FC<ForecastProps> = ({ forecast, unit }) => {
     <Paper
       sx={{
         mt: 3,
+        mb:3,
         p: 3,
         borderRadius: 3,
         width: "100%",
-        maxWidth: 500,
-        background: "linear-gradient(135deg, #179bae, #4158a6)",
+        maxWidth: 600,
+        background: "linear-gradient(135deg, #3b4b69, #7b8dad)",
         color: "white",
       }}
       elevation={6}
     >
-      <Box display="flex" justifyContent="space-between" alignItems="center">
+      <Box display="flex" justifyContent="space-between" alignItems="center" >
       <Typography variant="h5" align="center" sx={{ mb: 1 }}>
         Today’s Forecast 
       </Typography>
@@ -96,6 +97,7 @@ const DailyForecast: React.FC<ForecastProps> = ({ forecast, unit }) => {
                 backdropFilter: "blur(10px)",
                 textAlign: "center",
                 minWidth: 100,
+                height:160
               }}
             >
               <Typography variant="body2">{entry.time}</Typography>
@@ -107,12 +109,12 @@ const DailyForecast: React.FC<ForecastProps> = ({ forecast, unit }) => {
             </Paper>
           ))
         ) : (
-          <Box sx={{ width: "100%", height: 200 }}>
+          <Box sx={{ width: "100%", height: 300 , backgroundColor: "#fff"}}>
             <ResponsiveContainer width="100%" height="100%">
               <LineChart data={nextTenHours}>
                 <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="time" stroke="#fff" />
-                <YAxis domain={["auto", "auto"]} stroke="#fff" />
+                <XAxis dataKey="time" stroke="#333333" />
+                <YAxis domain={["auto", "auto"]} stroke="#333333" />
                 <Tooltip
                   contentStyle={{
                     backgroundColor: "#1e3c72",
@@ -120,7 +122,7 @@ const DailyForecast: React.FC<ForecastProps> = ({ forecast, unit }) => {
                     borderRadius: 5,
                   }}
                 />
-                <Line type="monotone" dataKey="temp" stroke="#FF8343" strokeWidth={3} />
+                <Line type="monotone" dataKey="temp" stroke="#ba2d06" strokeWidth={3} />
               </LineChart>
             </ResponsiveContainer>
           </Box>

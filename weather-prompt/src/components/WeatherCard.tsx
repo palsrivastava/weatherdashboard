@@ -38,8 +38,10 @@ const WeatherCard: React.FC<WeatherCardProps> = ({ weather, unit }) => {
         p: 3,
         borderRadius: 3,
         width: "100%",
-        maxWidth: 500,
-        background: "linear-gradient(135deg, #179bae, #4158a6)",
+        height: "100%",
+        maxWidth: 600,
+        maxHeight: 300,
+        background: "linear-gradient(135deg, #3b4b69, #7b8dad)",
         color: "white",
       }}
       elevation={6}

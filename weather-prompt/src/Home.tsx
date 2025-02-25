@@ -46,7 +46,7 @@ const Home: React.FC = () => {
 
   return (
     <>
-      <AppBar position="static" sx={{ backgroundColor: "#1c2e4a" }}>
+      <AppBar position="static" sx={{ backgroundColor: "#333333" }}>
         <Toolbar >
           <AcUnit />
           <Typography variant="h6" sx={{ marginLeft: 1 }}>
@@ -64,8 +64,8 @@ const Home: React.FC = () => {
           <SearchBar onCitySelect={handleCitySelect} />
         </Box>
 
-        <Stack direction={{ xs: "column", md: "row" }} spacing={4} justifyContent="space-evenly">
-          <Stack spacing={4} sx={{ flex: 1, alignItems: "center" }}>
+        <Stack direction={{ xs: "column", md: "row" }} spacing={4} justifyContent="space-evenly" my={3}>
+          <Stack spacing={4} sx={{ flex: 1, alignItems: "center"}}>
             {loading && <CircularProgress />}
             <WeatherCard weather={weather} unit={unit} />
             <DailyForecast forecast={forecast} unit={unit} />

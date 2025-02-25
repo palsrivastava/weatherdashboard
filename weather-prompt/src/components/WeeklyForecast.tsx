@@ -56,8 +56,8 @@ const WeeklyForecast: React.FC<WeeklyForecastProps> = ({ forecast, unit }) => {
   }));
 
   return (
-    <Paper elevation={4} sx={{ width: "100%", maxWidth: 600 ,background:"#1c2e4a", borderRadius: "10px"}}>
-      <Box display="flex" justifyContent="space-between" alignItems="center" sx={{ p:1, borderRadius: '10px', backgroundColor:"#1c2e4a"}}>
+    <Paper elevation={4} sx={{ width: "100%", maxWidth: 600 ,background:"#333333", borderRadius: "10px"}}>
+      <Box display="flex" justifyContent="space-between" alignItems="center" sx={{ p:1, borderRadius: '10px', backgroundColor:"#333333"}}>
         <Typography variant="h6" sx ={{color:"#fff"}}>  5-Day Forecast</Typography>
         <IconButton sx={{color:"#1c2e4a", backgroundColor:"#fff"}} onClick={toggleView}>
           {view === "accordion" ? <ShowChart/> : <TableRows/> }
@@ -65,7 +65,7 @@ const WeeklyForecast: React.FC<WeeklyForecastProps> = ({ forecast, unit }) => {
       </Box>
       {view === "accordion" ? (
         dailyForecast.map((day, index) => (
-          <Accordion key={index} sx={{background:"#1c2e4a"}}>
+          <Accordion key={index} sx={{background:"#333333"}}>
             <AccordionSummary expandIcon={<ExpandMoreIcon sx={{opacity:0.5,color:"#1c2e4a", borderRadius:"16px" ,backgroundColor:"#fff" }}/>} >
               <Typography sx ={{color:"#fff", opacity:1.0}}>
                 {new Date(day.dt_txt).toLocaleDateString("en-US", {
@@ -73,7 +73,7 @@ const WeeklyForecast: React.FC<WeeklyForecastProps> = ({ forecast, unit }) => {
                 })}
               </Typography>
             </AccordionSummary>
-            <AccordionDetails sx={{background: "linear-gradient(135deg,#4158a6,#179bae)", color:"#fff", opacity:1.0}}>
+            <AccordionDetails sx={{background: "#555555", color:"#fff", opacity:1.0}}>
               <Box display="flex" alignItems="center" >
                 <img
                   src={`https://openweathermap.org/img/wn/${day.weather[0].icon}.png`}
@@ -98,16 +98,16 @@ const WeeklyForecast: React.FC<WeeklyForecastProps> = ({ forecast, unit }) => {
           </Accordion>
         ))
       ) : (
-        <Box sx={{ p: 2, width: "100%", height: 300 , color:"#fff",background: "linear-gradient(135deg, #179bae, #4158a6)"}}>
+        <Box sx={{ p: 2, width: "100%", height: 300 , color:"#fff",background: "#fff"}}>
           <ResponsiveContainer width="100%" height="100%" >
             <LineChart data={chartData}  >
               <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="name" stroke="#fff" />
-              <YAxis stroke="#fff" />
+              <XAxis dataKey="name" stroke="#333333" />
+              <YAxis stroke="#333333" />
               <Tooltip  />
               <Legend />
-              <Line type="monotone" dataKey = "High" stroke="#FF8343" strokeWidth={4} />
-              <Line type="monotone" dataKey="Low" stroke="#ADD8E6" strokeWidth={4} />
+              <Line type="monotone" dataKey = "High" stroke="#ba2d06" strokeWidth={4} />
+              <Line type="monotone" dataKey="Low" stroke="#7b8dad" strokeWidth={4} />
             </LineChart>
           </ResponsiveContainer>
         </Box>

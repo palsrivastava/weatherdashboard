@@ -30,9 +30,9 @@ html, body, #root {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background-image: url("./assets/greysky.jpg");
+  background-color: #cacbcc;
 }
-
+/* background-image: url("./assets/greysky.jpg") */
 /* Logo Styles (if needed) */
 .logo {
   height: 6em;
